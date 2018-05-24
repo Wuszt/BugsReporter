@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BD90A3A5-26C9-4241-ACE3-A1E4A96702EF}</ProjectGuid>
+    <ProjectGuid>{EBCCD362-E81F-43BE-919A-992B9AD7F3B5}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -92,15 +92,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Models\Issue.Context.tt">
+    <Content Include="Models\Issues.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Issue.edmx</DependentUpon>
-      <LastGenOutput>Issue.Context.cs</LastGenOutput>
+      <DependentUpon>Issues.edmx</DependentUpon>
+      <LastGenOutput>Issues.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Issue.tt">
+    <Content Include="Models\Issues.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Issue.edmx</DependentUpon>
-      <LastGenOutput>Issue1.cs</LastGenOutput>
+      <DependentUpon>Issues.edmx</DependentUpon>
+      <LastGenOutput>Issues.cs</LastGenOutput>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>
@@ -110,34 +110,34 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Issue.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Issue.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Issue.cs">
-      <DependentUpon>Issue.tt</DependentUpon>
+      <DependentUpon>Issues.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Issue.Designer.cs">
+    <Compile Include="Models\Issues.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Issue.edmx</DependentUpon>
+      <DependentUpon>Issues.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Issue1.cs">
+    <Compile Include="Models\Issues.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Issue.tt</DependentUpon>
+      <DependentUpon>Issues.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Issues.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Issues.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <EntityDeploy Include="Models\Issue.edmx">
+    <EntityDeploy Include="Models\Issues.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Issue.Designer.cs</LastGenOutput>
+      <LastGenOutput>Issues.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Issue.edmx.diagram">
-      <DependentUpon>Issue.edmx</DependentUpon>
+    <Content Include="Models\Issues.edmx.diagram">
+      <DependentUpon>Issues.edmx</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -152,6 +152,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BugsReporterModel\BugsReporterModel.csproj">
+      <Project>{aee0caf7-893d-4e9a-b45c-cad80b6edaed}</Project>
+      <Name>BugsReporterModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -165,9 +171,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>17853</DevelopmentServerPort>
+          <DevelopmentServerPort>18982</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:17853/</IISUrl>
+          <IISUrl>http://localhost:18982/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
