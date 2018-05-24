@@ -23,6 +23,8 @@ namespace BugsReporterClientView
         public MainWindow()
         {
             InitializeComponent();
+            BugsReporterClient.IssuesSender issueSender = new BugsReporterClient.IssuesSender("http://localhost:18982/api/issues");
+            issueSender.SendBug("Error", "moj mail");
         }
     }
 }

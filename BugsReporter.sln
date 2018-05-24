@@ -9,6 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugsReporterServer", "BugsR
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugsReporterClientView", "BugsReporterClientView\BugsReporterClientView.csproj", "{C72E53C8-A56C-4764-B278-77C7543FFD8B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5C8152D1-0E1B-4F91-A7F1-1DC6884774C7} = {5C8152D1-0E1B-4F91-A7F1-1DC6884774C7}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugsReporterClient", "BugsReporterClient\BugsReporterClient.csproj", "{5C8152D1-0E1B-4F91-A7F1-1DC6884774C7}"
 	ProjectSection(ProjectDependencies) = postProject
