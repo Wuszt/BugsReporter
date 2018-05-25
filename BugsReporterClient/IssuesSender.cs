@@ -17,23 +17,25 @@ namespace BugsReporterClient
             m_serverURI = new Uri(serverAdress);
         }
 
-        public void SendBug(string stack, string userInfo)
+        public void SendBug(string stack, string userInfo, string title = null, string description = null)
         {
-            SendIssue(IssueType.Bug, stack, userInfo);
+            SendIssue(IssueType.Bug, stack, userInfo, title, description);
         }
 
         public void SendCrash(string stack, string userInfo)
         {
-            SendIssue(IssueType.Crash, stack, userInfo);
+          //  SendIssue(IssueType.Crash, stack, userInfo, null);
         }
 
-        private void SendIssue(IssueType type, string stack, string userInfo )
+        private void SendIssue(IssueType type, string stack, string userInfo, string title, string desc )
         {
             Issue issue = new Issue()
             {
                 Stack = stack,
                 Type = type,
-                UserInfo = userInfo
+                UserInfo = userInfo,
+                Title = title,
+                Description = desc
             };
 
             using (var client = new HttpClient())

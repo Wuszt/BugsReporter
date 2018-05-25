@@ -23,8 +23,13 @@ namespace BugsReporterClientView
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
             BugsReporterClient.IssuesSender issueSender = new BugsReporterClient.IssuesSender("http://localhost:18982/api/issues");
-            issueSender.SendBug("Error", "moj mail");
+            issueSender.SendBug("Error", MailTextBox.Text, TitleTextBox.Text, DescTextBox.Text);
+            Application.Current.Shutdown();
         }
     }
 }

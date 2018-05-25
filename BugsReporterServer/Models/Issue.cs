@@ -18,5 +18,7 @@ namespace BugsReporterServer.Models
         public byte Type { get; set; }
         public string UserInfo { get; set; }
         public string Stack { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }
