@@ -82,7 +82,7 @@ namespace BugsReporterServer.Controllers
             db.Issues.Add(issue);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = issue.ID }, issue);
+            return Ok(issue);//CreatedAtRoute("DefaultApi", new { id = issue.ID }, issue);
         }
 
         // DELETE: api/Issues/5

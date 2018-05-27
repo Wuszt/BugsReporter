@@ -52,13 +52,26 @@ namespace BugsReporterClient
                 Description = desc
             };
 
-            m_attachments.GetCompressedAttachments();
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = m_serverURI;
 
                 var postingTask = client.PostAsJsonAsync("issues", issue);
+
+                postingTask.Wait();
+
+                var readingTask = postingTask.Result.Content.ReadAsAsync<Issue>();
+
+                readingTask.Wait();
+
+                issue = readingTask.Result;
+            }
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = m_serverURI;
+
+                var postingTask = client.PostAsync("files/"+issue.ID, new ByteArrayContent(m_attachments.GetCompressedAttachments()));
 
                 postingTask.Wait();
             }

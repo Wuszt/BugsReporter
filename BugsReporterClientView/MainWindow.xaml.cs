@@ -43,7 +43,7 @@ namespace BugsReporterClientView
         {
             InitializeComponent();
             InitializeAttachmentsList(attachments, attachScreenshot);
-            m_issuesSender = new BugsReporterClient.IssuesSender("http://localhost:18982/api/issues", attachScreenshot, attachments);
+            m_issuesSender = new BugsReporterClient.IssuesSender("http://localhost:18982/api/", attachScreenshot, attachments);
         }
 
         private void InitializeAttachmentsList(string[] attachments, bool attachScreenShot)

@@ -52,7 +52,7 @@ namespace BugsReporterClient
             m_screenShot = remake ? GetScreenShot() : null;
         }
 
-        public void GetCompressedAttachments()
+        public byte[] GetCompressedAttachments()
         {
             if (File.Exists(c_tmpZipFilePath))
                 File.Delete(c_tmpZipFilePath);
@@ -69,6 +69,13 @@ namespace BugsReporterClient
                     var entry = archive.CreateEntry(ScreenShotFileName);
                     m_screenShot.Save(entry.Open(), c_screenFormat);
                 }
+            }
+
+            using (FileStream stream = new FileStream(c_tmpZipFilePath, FileMode.Open))
+            {
+                byte[] bytes = new byte[(int)stream.Length];
+                stream.Read(bytes, 0, bytes.Length);
+                return bytes;
             }
         }
 
