@@ -22,6 +22,8 @@ namespace BugsReporterClientView
     {
         public MainWindow()
         {
+            BugsReporterClient.Attachments att = new BugsReporterClient.Attachments(new string[] { "lol.txt" }, true);
+            att.GetCompressedAttachments();
             InitializeComponent();
         }
 
