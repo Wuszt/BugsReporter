@@ -38,6 +38,20 @@ namespace BugsReporterClient
         public Attachments(string[] files, bool makeAndAttachScreenshot = false) : this(files, makeAndAttachScreenshot ? Attachments.GetScreenShot() : null)
         {
         }
+
+        public Attachments(string[] files, string screenshotPath) : this(files, Image.FromFile(screenshotPath))
+        { }
+
+        public void UpdateCustomFiles(string[] files)
+        {
+            m_files = files;
+        }
+
+        public void ResetScreenShot(bool remake)
+        {
+            m_screenShot = remake ? GetScreenShot() : null;
+        }
+
         public void GetCompressedAttachments()
         {
             if (File.Exists(c_tmpZipFilePath))
@@ -50,10 +64,18 @@ namespace BugsReporterClient
                     archive.CreateEntryFromFile(m_files[i], Path.GetFileName(m_files[i]));
                 }
 
-                var entry = archive.CreateEntry(ScreenShotFileName);
-                var stream = new MemoryStream();
-                m_screenShot.Save(entry.Open(), c_screenFormat);
+                if (m_screenShot != null)
+                {
+                    var entry = archive.CreateEntry(ScreenShotFileName);
+                    m_screenShot.Save(entry.Open(), c_screenFormat);
+                }
             }
+        }
+
+        public void Dispose()
+        {
+            if (m_screenShot != null)
+                m_screenShot.Dispose();
         }
 
         public static Image GetScreenShot()
@@ -70,12 +92,6 @@ namespace BugsReporterClient
             }
 
             return bmpScreenCapture;
-        }
-
-        public void Dispose()
-        {
-            if (m_screenShot != null)
-                m_screenShot.Dispose();
         }
     }
 }

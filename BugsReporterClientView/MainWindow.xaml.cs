@@ -20,17 +20,60 @@ namespace BugsReporterClientView
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private BugsReporterClient.IssuesSender m_issuesSender = null;
+        private class AttachmentsListElement
         {
-            BugsReporterClient.Attachments att = new BugsReporterClient.Attachments(new string[] { "lol.txt" }, true);
-            att.GetCompressedAttachments();
+            public string FilePath = null;
+            public CheckBox CheckBox = null;
+
+            public AttachmentsListElement(ListBox parent, string filePath)
+            {
+                CheckBox = new CheckBox();
+                parent.Items.Add(CheckBox);
+                FilePath = filePath;
+                CheckBox.Content = System.IO.Path.GetFileName(FilePath);
+            }
+        }
+
+        private List<AttachmentsListElement> m_customAttachments = new List<AttachmentsListElement>();
+
+        private CheckBox m_screenShotCheckBox = null;
+
+        public MainWindow(string[] attachments, bool attachScreenshot)
+        {
             InitializeComponent();
+            InitializeAttachmentsList(attachments, attachScreenshot);
+            m_issuesSender = new BugsReporterClient.IssuesSender("http://localhost:18982/api/issues", attachScreenshot, attachments);
+        }
+
+        private void InitializeAttachmentsList(string[] attachments, bool attachScreenShot)
+        {
+            if (attachScreenShot)
+            {
+                m_screenShotCheckBox = new CheckBox();
+                listBox.Items.Add(m_screenShotCheckBox);
+                m_screenShotCheckBox.Content = "Screenshot";
+            }
+
+            for (int i = 0; i < attachments.Length; ++i)
+            {
+                AddCustomAttachmentToList(attachments[i]);
+            }
+        }
+
+        private void AddCustomAttachmentToList(string path)
+        {
+            m_customAttachments.Add(new AttachmentsListElement(listBox, path));
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            BugsReporterClient.IssuesSender issueSender = new BugsReporterClient.IssuesSender("http://localhost:18982/api/issues");
-            issueSender.SendBug("Error", MailTextBox.Text, TitleTextBox.Text, DescTextBox.Text);
+            if (m_screenShotCheckBox.IsChecked == false)
+                m_issuesSender.ResetScreenShot(false);
+
+            m_issuesSender.UpdateCustomAttachments(m_customAttachments.Where(x => x.CheckBox.IsChecked == true).Select(y => y.FilePath).ToArray());
+
+            m_issuesSender.SendBug("Error", MailTextBox.Text, TitleTextBox.Text, DescTextBox.Text);
             Application.Current.Shutdown();
         }
     }

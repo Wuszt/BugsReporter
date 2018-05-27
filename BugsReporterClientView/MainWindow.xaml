@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BugsReporterClientView"
         mc:Ignorable="d"
-        Title="Bug Reporter" Height="450" Width="450"
+        Title="Bug Reporter" Height="550" Width="450"
         Background="LightGray"
         ResizeMode="CanMinimize"
         Icon="Resources/bugIcon.png">
     <Grid>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid HorizontalAlignment="Stretch" Height="120">
-                <Image x:Name="Icon" HorizontalAlignment="Left" Height="105" VerticalAlignment="Center" Width="104" Source="Resources/bugLogo.png" Margin="42,0,0,0"/>
+                <Image x:Name="Icon" HorizontalAlignment="Left" Height="105" VerticalAlignment="Center" Width="104" Source="Resources/bugLogo.png" Margin="20,0,0,0" RenderTransformOrigin="0.13,0.489"/>
                 <TextBlock TextWrapping="Wrap" Margin="146,20,0.2,19">Welcome to the Bug Reporter. Please take a minute to describe the issue.</TextBlock>
             </Grid>
             <Separator/>
@@ -27,6 +27,11 @@
             <Grid HorizontalAlignment="Stretch" Height="105" VerticalAlignment="Top" Width="405">
                 <TextBox x:Name="DescTextBox" HorizontalAlignment="Stretch" Height="64" Margin="0,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Opacity="0.5"/>
                 <Label x:Name="Desc" Content="Describe the problem" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14"/>
+            </Grid>
+            <Grid HorizontalAlignment="Stretch" Height="125" VerticalAlignment="Top" Width="405">
+                <Label x:Name="AttachmentsTextBox" Content="Choose attachments:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14"/>
+                <ListBox x:Name="listBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,34,0,0" Background="Transparent">
+                </ListBox>
             </Grid>
         </StackPanel>
         <Button x:Name="SendButton" Content="Send" HorizontalAlignment="Right" Margin="0,0,10.2,9.8" VerticalAlignment="Bottom" Width="75" Click="SendButton_Click"/>

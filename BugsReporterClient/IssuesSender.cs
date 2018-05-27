@@ -12,9 +12,23 @@ namespace BugsReporterClient
     {
         private Uri m_serverURI = null;
 
-        public IssuesSender(string serverAdress)
+        private Attachments m_attachments = null;
+
+        public IssuesSender(string serverAdress, bool makeScreenShot, string[] customAttachments)
         {
             m_serverURI = new Uri(serverAdress);
+
+            m_attachments = new Attachments(customAttachments, makeScreenShot);
+        }
+
+        public void UpdateCustomAttachments(string[] paths)
+        {
+            m_attachments.UpdateCustomFiles(paths);
+        }
+
+        public void ResetScreenShot(bool remake)
+        {
+            m_attachments.ResetScreenShot(remake);
         }
 
         public void SendBug(string stack, string userInfo, string title = null, string description = null)
@@ -37,6 +51,8 @@ namespace BugsReporterClient
                 Title = title,
                 Description = desc
             };
+
+            m_attachments.GetCompressedAttachments();
 
             using (var client = new HttpClient())
             {
