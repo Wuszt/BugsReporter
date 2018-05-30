@@ -17,15 +17,15 @@
             </Grid>
             <Separator/>
             <Grid HorizontalAlignment="Stretch" Height="53" VerticalAlignment="Top" Width="405">
-                <TextBox x:Name="MailTextBox" HorizontalAlignment="Stretch" Height="23" Margin="0,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Opacity="0.5"/>
+                <TextBox x:Name="MailTextBox" HorizontalAlignment="Stretch" Height="23" Margin="0,31,0,0" TextWrapping="Wrap" Text="{Binding UsersContact}" VerticalAlignment="Top" Opacity="0.5"/>
                 <Label x:Name="Mail" Content="Your email address" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14"/>
             </Grid>
             <Grid HorizontalAlignment="Stretch" Height="53" VerticalAlignment="Top" Width="405">
-                <TextBox x:Name="TitleTextBox" HorizontalAlignment="Stretch" Height="23" Margin="0,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Opacity="0.5"/>
+                <TextBox x:Name="TitleTextBox" HorizontalAlignment="Stretch" Height="23" Margin="0,31,0,0" TextWrapping="Wrap" Text="{Binding Title}" VerticalAlignment="Top" Opacity="0.5"/>
                 <Label x:Name="Title" Content="Title" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14"/>
             </Grid>
             <Grid HorizontalAlignment="Stretch" Height="105" VerticalAlignment="Top" Width="405">
-                <TextBox x:Name="DescTextBox" HorizontalAlignment="Stretch" Height="64" Margin="0,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Opacity="0.5"/>
+                <TextBox x:Name="DescTextBox" HorizontalAlignment="Stretch" Height="64" Margin="0,31,0,0" TextWrapping="Wrap" Text="{Binding Description}" VerticalAlignment="Top" Opacity="0.5"/>
                 <Label x:Name="Desc" Content="Describe the problem" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14"/>
             </Grid>
             <Grid HorizontalAlignment="Stretch" Height="125" VerticalAlignment="Top" Width="405">

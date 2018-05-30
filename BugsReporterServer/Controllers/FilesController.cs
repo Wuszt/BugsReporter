@@ -38,15 +38,16 @@ namespace BugsReporterServer.Controllers
         {
             var reading = Request.Content.ReadAsStreamAsync();
             reading.Wait();
-            Stream stream = reading.Result;
 
-            int length = (int)stream.Length;
-
-            using (FileStream fileStream = File.Create(Path.Combine(c_filesDirectory, id + ".zip"), length))
+            using (Stream stream = reading.Result)
             {
-                byte[] bytes = new byte[length];
-                stream.Read(bytes, 0, length);
-                fileStream.Write(bytes, 0, length);
+                int length = (int)stream.Length;
+                using (FileStream fileStream = File.Create(Path.Combine(c_filesDirectory, id + ".zip"), length))
+                {
+                    byte[] bytes = new byte[length];
+                    stream.Read(bytes, 0, length);
+                    fileStream.Write(bytes, 0, length);
+                }
             }
         }
     }

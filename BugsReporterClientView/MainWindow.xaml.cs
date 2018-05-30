@@ -39,9 +39,19 @@ namespace BugsReporterClientView
 
         private CheckBox m_screenShotCheckBox = null;
 
+        private class UsersInput
+        {
+            public string UsersContact { get; set; }
+            public string Title { get; set; }
+            public string Description { get; set; }
+        }
+
+        private UsersInput m_usersInput = new UsersInput();
+
         public MainWindow(string[] attachments, bool attachScreenshot)
         {
             InitializeComponent();
+            this.DataContext = m_usersInput;
             InitializeAttachmentsList(attachments, attachScreenshot);
             m_issuesSender = new BugsReporterClient.IssuesSender("http://localhost:18982/api/", attachScreenshot, attachments);
         }
@@ -73,7 +83,7 @@ namespace BugsReporterClientView
 
             m_issuesSender.UpdateCustomAttachments(m_customAttachments.Where(x => x.CheckBox.IsChecked == true).Select(y => y.FilePath).ToArray());
 
-            m_issuesSender.SendBug("Error", MailTextBox.Text, TitleTextBox.Text, DescTextBox.Text);
+            m_issuesSender.SendBug("Error", m_usersInput.UsersContact, m_usersInput.Title, m_usersInput.Description);
             Application.Current.Shutdown();
         }
     }
