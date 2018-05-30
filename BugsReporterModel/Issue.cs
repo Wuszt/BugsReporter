@@ -12,6 +12,10 @@
         public string Title { get; set; }
 
         public string Description { get; set; }
+
+        public bool AttachedScreenshot { get; set; }
+
+        public string[] CustomAttachmentsFiles { get; set; }
     }
 
     public enum IssueType
