@@ -17,9 +17,9 @@ namespace BugsReporterServer.Controllers
         private BugsReporterDBEntities db = new BugsReporterDBEntities();
 
         // GET: api/Issues
-        public IQueryable<Issue> GetIssues()
+        public IList<Issue> GetIssues()
         {
-            return db.Issues;
+            return db.Issues.ToList();
         }
 
         // GET: api/Issues/5
