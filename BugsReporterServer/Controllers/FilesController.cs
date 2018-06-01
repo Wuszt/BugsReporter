@@ -15,8 +15,11 @@ namespace BugsReporterServer.Controllers
     public class FilesController : ApiController
     {
         private const string c_filesDirectory = @"D:/BugsLogger";
+
+        private static SortedDictionary<int, FileInfo> m_cachedFilesInfos = new SortedDictionary<int, FileInfo>();
+
         // GET: api/Files
-        public IEnumerable<FileInfo> Get()
+        public Dictionary<int,FileInfo> Get()
         {
             using (var client = new HttpClient())
             {
@@ -34,14 +37,14 @@ namespace BugsReporterServer.Controllers
 
                 issues = JsonConvert.DeserializeObject<Issue[]>(readingTask.Result);
 
-                List<FileInfo> files = new List<FileInfo>();
+                Dictionary<int,FileInfo> files = new Dictionary<int, FileInfo>();
 
                 foreach(var issue in issues)
                 {
                     var file = Get(issue.ID);
 
                     if (file != null)
-                        files.Add(file);
+                        files.Add(issue.ID, file);
                 }
 
                 return files;
@@ -51,10 +54,21 @@ namespace BugsReporterServer.Controllers
         // GET: api/Files/5
         public FileInfo Get(int id)
         {
+            if(!m_cachedFilesInfos.ContainsKey(id))
+            {
+                if (!TryToLoadFileInfoToCache(id))
+                    return null;
+            }
+
+            return m_cachedFilesInfos[id];
+        }
+
+        private bool TryToLoadFileInfoToCache(int id)
+        {
             string filePath = Path.Combine(c_filesDirectory, id + ".zip");
 
             if (!File.Exists(filePath))
-                return null;
+                return false;
 
             FileInfo result = null;
 
@@ -68,8 +82,10 @@ namespace BugsReporterServer.Controllers
                 };
             }
 
-            return result;
-        }
+            m_cachedFilesInfos[id] = result;
+
+            return true;
+        } 
 
         // DELETE: api/Files/5
         public void Delete(int id)
