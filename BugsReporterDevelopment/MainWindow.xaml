@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BugsReporterDevelopment"
         mc:Ignorable="d"
-        Title="MainWindow" Height="525" Width="800">
+        Title="MainWindow" Height="725" Width="1000.2">
     <Grid>
-        <DockPanel Margin="20,38,314.6,20.2">
-            <DataGrid x:Name="listView" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" ItemsSource="{Binding IssuesView}" AutoGenerateColumns="False">
+        <DockPanel Margin="20,80,400,15.2">
+            <Border Height="auto" Width="auto" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+            <DataGrid x:Name="listView" ItemsSource="{Binding IssuesView}" AutoGenerateColumns="False" SelectionMode="Single">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridCell" x:Key="OneClickCheckBox">
                         <Style.Triggers>
@@ -22,9 +23,15 @@
                     <DataGridCheckBoxColumn Header="" Width="30" Binding="{Binding Checked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" CellStyle="{StaticResource OneClickCheckBox}">
                     </DataGridCheckBoxColumn>
                     <DataGridTextColumn  Header="ID" Width="50" Binding="{Binding Issue.ID}" IsReadOnly="True"/>
-                    <DataGridTextColumn  Header="Title" Width="100" Binding="{Binding Issue.Title}" IsReadOnly="True"/>
-                    <DataGridTextColumn  Header="Error" Width="100" Binding="{Binding Issue.Stack}" IsReadOnly="True"/>
-                    <DataGridTextColumn  Header="Attachments" Width="80" Binding="{Binding IsAttachmentAvailable}" IsReadOnly="True"/>
+                    <DataGridTextColumn  Header="Title" Width="*" Binding="{Binding Issue.Title}" IsReadOnly="True"/>
+                    <DataGridTextColumn  Header="Error" Width="*" Binding="{Binding Issue.Stack}" IsReadOnly="True"/>
+                    <DataGridTextColumn  Header="Attachments" Width="80" Binding="{Binding IsAttachmentAvailable}" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
                 <!--<ListView x:Name="listView" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" ItemsSource="{Binding IssuesView}">
                             <ListView.View>
@@ -40,6 +47,45 @@
             </ListView.View>-->
                 <!--</ListView>-->
             </DataGrid>
+            </Border>
         </DockPanel>
+        <Border Margin="520,80,21.6,15.2" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Right" Width="350" >
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}" x:Key="Header">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="15"/>
+                    </Style>
+                    <Style TargetType="Expander">
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="0,5,0,5"/>
+                    </Style>
+                </StackPanel.Resources>
+                <StackPanel>
+                    <Label Style="{StaticResource Header}" Content="User Info"/>
+                    <Label Content="MAIL"/>
+                </StackPanel>
+                <StackPanel Background="WhiteSmoke">
+                    <Label Style="{StaticResource Header}" Content="Title" />
+                    <Label Content="TITLE"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Style="{StaticResource Header}" Content="Stack"/>
+                    <Expander Header="Stack"/>
+                </StackPanel>
+                <StackPanel Background="WhiteSmoke">
+                    <Label Style="{StaticResource Header}" Content="Desc"/>
+                    <Expander Header="Desc" HorizontalContentAlignment ="Center">
+                    </Expander>
+                </StackPanel>
+                <StackPanel>
+                    <Label Style="{StaticResource Header}" Content="Attachments"/>
+                    <Expander Header="Attachments"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
