@@ -3,7 +3,6 @@
     public class Issue
     {
         public int ID { get; set; }
-        public IssueType Type { get; set;}
 
         public string Stack { get; set; }
 
@@ -16,12 +15,5 @@
         public bool AttachedScreenshot { get; set; }
 
         public string[] CustomAttachmentsFiles { get; set; }
-    }
-
-    public enum IssueType
-    {
-        Unknown = 0,
-        Bug = 1,
-        Crash = 2
     }
 }

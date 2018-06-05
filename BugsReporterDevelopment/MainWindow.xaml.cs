@@ -15,10 +15,9 @@ namespace BugsReporterDevelopment
         public MainWindow()
         {
             InitializeComponent();
-
             var model = new MainViewModel();
             model.Issues = Loader.GetAllIssuesInfos();
-            listView.ItemsSource = model.IssuesView;
+            DataContext = model;
         }
     }
 }

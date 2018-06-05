@@ -83,7 +83,7 @@ namespace BugsReporterClientView
 
             m_issuesSender.UpdateCustomAttachments(m_customAttachments.Where(x => x.CheckBox.IsChecked == true).Select(y => y.FilePath).ToArray());
 
-            m_issuesSender.SendBug("Error", m_usersInput.UsersContact, m_usersInput.Title, m_usersInput.Description);
+            m_issuesSender.SendIssue("Error", m_usersInput.UsersContact, m_usersInput.Title, m_usersInput.Description);
             Application.Current.Shutdown();
         }
     }

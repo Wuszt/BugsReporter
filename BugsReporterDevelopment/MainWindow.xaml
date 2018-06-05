@@ -7,49 +7,49 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="725" Width="1000.2">
     <Grid>
-        <DockPanel Margin="20,80,400,15.2">
+        <DockPanel Margin="20,20,500,20">
             <Border Height="auto" Width="auto" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
-            <DataGrid x:Name="listView" ItemsSource="{Binding IssuesView}" AutoGenerateColumns="False" SelectionMode="Single">
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridCell" x:Key="OneClickCheckBox">
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="IsEditing" Value="True" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="" Width="30" Binding="{Binding Checked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" CellStyle="{StaticResource OneClickCheckBox}">
-                    </DataGridCheckBoxColumn>
-                    <DataGridTextColumn  Header="ID" Width="50" Binding="{Binding Issue.ID}" IsReadOnly="True"/>
-                    <DataGridTextColumn  Header="Title" Width="*" Binding="{Binding Issue.Title}" IsReadOnly="True"/>
-                    <DataGridTextColumn  Header="Error" Width="*" Binding="{Binding Issue.Stack}" IsReadOnly="True"/>
-                    <DataGridTextColumn  Header="Attachments" Width="80" Binding="{Binding IsAttachmentAvailable}" IsReadOnly="True">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                </DataGrid.Columns>
-                <!--<ListView x:Name="listView" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" ItemsSource="{Binding IssuesView}">
+                <DataGrid x:Name="listView" ItemsSource="{Binding IssuesView}" SelectedItem="{Binding SelectedIssue, Mode=TwoWay}" AutoGenerateColumns="False" SelectionMode="Single">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridCell" x:Key="OneClickCheckBox">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="IsEditing" Value="True" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Header="" Width="30" Binding="{Binding Checked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" CellStyle="{StaticResource OneClickCheckBox}">
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn  Header="ID" Width="50" Binding="{Binding Issue.ID}" IsReadOnly="True"/>
+                        <DataGridTextColumn  Header="Title" Width="*" Binding="{Binding Issue.Title}" IsReadOnly="True"/>
+                        <DataGridTextColumn  Header="Error" Width="*" Binding="{Binding ShortStack}" IsReadOnly="True"/>
+                        <DataGridTextColumn  Header="Attachments" Width="80" Binding="{Binding IsAttachmentAvailableAsString}" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                    <!--<ListView x:Name="listView" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" ItemsSource="{Binding IssuesView}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="ID" Width="30" DisplayMemberBinding="{Binding Issue.ID}"/>
                                     -->
-                <!--<GridViewColumn Header="Time" Width="50 "/>-->
-                <!--
+                    <!--<GridViewColumn Header="Time" Width="50 "/>-->
+                    <!--
                         <GridViewColumn Header="Title" Width="100" DisplayMemberBinding="{Binding Issue.Title}"/>
                         <GridViewColumn Header="Error" Width="100" DisplayMemberBinding="{Binding Issue.Stack}"/>
                         <GridViewColumn Header="Attachments" Width="80" DisplayMemberBinding="{Binding IsAttachmentAvailable}"/>
                     </GridView>
             </ListView.View>-->
-                <!--</ListView>-->
-            </DataGrid>
+                    <!--</ListView>-->
+                </DataGrid>
             </Border>
         </DockPanel>
-        <Border Margin="520,80,21.6,15.2" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Right" Width="350" >
+        <Border Margin="0,20,21.6,20.2" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Right" Width="452" >
             <StackPanel>
                 <StackPanel.Resources>
                     <Style TargetType="Label">
@@ -61,29 +61,40 @@
                     </Style>
                     <Style TargetType="Expander">
                         <Setter Property="HorizontalAlignment" Value="Center"/>
-                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="Margin" Value="20,5,20,5"/>
+                        <Setter Property="Header" Value="Show"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsExpanded" Value="True">
+                                <Setter Property="Header" Value="Hide"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </StackPanel.Resources>
                 <StackPanel>
                     <Label Style="{StaticResource Header}" Content="User Info"/>
-                    <Label Content="MAIL"/>
+                    <Label Content="{Binding SelectedIssue.Issue.UserInfo}"/>
                 </StackPanel>
                 <StackPanel Background="WhiteSmoke">
                     <Label Style="{StaticResource Header}" Content="Title" />
-                    <Label Content="TITLE"/>
+                    <Label Content="{Binding SelectedIssue.Issue.Title}"/>
                 </StackPanel>
                 <StackPanel>
                     <Label Style="{StaticResource Header}" Content="Stack"/>
-                    <Expander Header="Stack"/>
+                    <Expander Header="{Binding SelectedIssue.ShortStack}" FontSize="10">
+                        <TextBlock Text="{Binding SelectedIssue.Issue.Stack}" TextWrapping="Wrap" FontSize="10"/>
+                    </Expander>
                 </StackPanel>
                 <StackPanel Background="WhiteSmoke">
                     <Label Style="{StaticResource Header}" Content="Desc"/>
-                    <Expander Header="Desc" HorizontalContentAlignment ="Center">
+                    <Expander Header="{Binding SelectedIssue.Issue.Description}" HorizontalContentAlignment ="Center">
+                        <TextBlock Text="{Binding SelectedIssue.Issue.Description}" TextWrapping="Wrap"/>
                     </Expander>
                 </StackPanel>
                 <StackPanel>
                     <Label Style="{StaticResource Header}" Content="Attachments"/>
-                    <Expander Header="Attachments"/>
+                    <Expander Header="Attachments" IsEnabled="{Binding SelectedIssue.IsAttachmentAvailable}">
+                        <TextBlock Text="{Binding SelectedIssue.AttachmentsList}" TextWrapping="Wrap"/>
+                    </Expander>
                 </StackPanel>
             </StackPanel>
         </Border>

@@ -31,25 +31,14 @@ namespace BugsReporterClient
             m_attachments.ResetScreenShot(remake);
         }
 
-        public void SendBug(string stack, string userInfo, string title = null, string description = null)
-        {
-            SendIssue(IssueType.Bug, stack, userInfo, title, description);
-        }
-
-        public void SendCrash(string stack, string userInfo)
-        {
-          //  SendIssue(IssueType.Crash, stack, userInfo, null);
-        }
-
-        private void SendIssue(IssueType type, string stack, string userInfo, string title, string desc )
+        public void SendIssue(string stack, string userInfo, string title = null, string description = null )
         {
             Issue issue = new Issue()
             {
                 Stack = stack,
-                Type = type,
                 UserInfo = userInfo,
                 Title = title,
-                Description = desc
+                Description = description
             };
 
             using (var client = new HttpClient())

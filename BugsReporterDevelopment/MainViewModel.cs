@@ -37,5 +37,20 @@ namespace BugsReporterDevelopment
                 SetProperty(ref m_issuesView, value);
             }
         }
+
+        private IssueInfo m_selectedIssue;
+
+        public IssueInfo SelectedIssue
+        {
+            get
+            {
+                return m_selectedIssue;
+            }
+
+            set
+            {
+                SetProperty(ref m_selectedIssue, value);
+            }
+        }
     }
 }
