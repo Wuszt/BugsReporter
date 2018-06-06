@@ -63,6 +63,21 @@ namespace BugsReporterServer.Controllers
             return m_cachedFilesInfos[id];
         }
 
+        [Route("api/files/{id}/download")]
+        public HttpResponseMessage GetFile(int id)
+        {
+            var dataBytes = File.ReadAllBytes(Path.Combine(c_filesDirectory, id + ".zip"));
+            var dataStream = new MemoryStream(dataBytes);
+
+            HttpResponseMessage httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK);
+            httpResponseMessage.Content = new StreamContent(dataStream);
+            httpResponseMessage.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            httpResponseMessage.Content.Headers.ContentDisposition.FileName = id + ".zip";
+            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            return httpResponseMessage;
+        }
+
         private bool TryToLoadFileInfoToCache(int id)
         {
             string filePath = Path.Combine(c_filesDirectory, id + ".zip");

@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Compression;
+using System.Threading;
 
 namespace BugsReporterClient
 {
@@ -18,7 +19,7 @@ namespace BugsReporterClient
 
         private readonly System.Drawing.Imaging.ImageFormat c_screenFormat = System.Drawing.Imaging.ImageFormat.Jpeg;
 
-        private readonly string c_tmpZipFilePath = "tmp.zip";
+        private readonly string c_tmpZipFileName = "tmp";
 
         private string ScreenShotFileName
         {
@@ -42,6 +43,11 @@ namespace BugsReporterClient
         public Attachments(string[] files, string screenshotPath) : this(files, Image.FromFile(screenshotPath))
         { }
 
+        private static void OnProcessExit(object sender, EventArgs e)
+        {
+            
+        }
+
         public void UpdateCustomFiles(string[] files)
         {
             m_files = files;
@@ -52,30 +58,48 @@ namespace BugsReporterClient
             m_screenShot = remake ? GetScreenShot() : null;
         }
 
+        public bool IsAnythingToSend
+        {
+            get
+            {
+                return m_screenShot != null || m_files.Length > 0;
+            }
+        }
+
         public byte[] GetCompressedAttachments()
         {
-            if (File.Exists(c_tmpZipFilePath))
-                File.Delete(c_tmpZipFilePath);
+            string filePath = c_tmpZipFileName + Thread.CurrentThread.ManagedThreadId;
 
-            using (ZipArchive archive = ZipFile.Open(c_tmpZipFilePath, ZipArchiveMode.Create))
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+
+            try
             {
-                for (int i = 0; i < m_files.Length; ++i)
+                using (ZipArchive archive = ZipFile.Open(filePath, ZipArchiveMode.Create))
                 {
-                    archive.CreateEntryFromFile(m_files[i], Path.GetFileName(m_files[i]));
+                    for (int i = 0; i < m_files.Length; ++i)
+                    {
+                        archive.CreateEntryFromFile(m_files[i], Path.GetFileName(m_files[i]));
+                    }
+
+                    if (m_screenShot != null)
+                    {
+                        var entry = archive.CreateEntry(ScreenShotFileName);
+                        m_screenShot.Save(entry.Open(), c_screenFormat);
+                    }
                 }
 
-                if (m_screenShot != null)
+                using (FileStream stream = new FileStream(filePath, FileMode.Open))
                 {
-                    var entry = archive.CreateEntry(ScreenShotFileName);
-                    m_screenShot.Save(entry.Open(), c_screenFormat);
+                    byte[] bytes = new byte[(int)stream.Length];
+                    stream.Read(bytes, 0, bytes.Length);
+                    return bytes;
                 }
             }
-
-            using (FileStream stream = new FileStream(c_tmpZipFilePath, FileMode.Open))
+            finally
             {
-                byte[] bytes = new byte[(int)stream.Length];
-                stream.Read(bytes, 0, bytes.Length);
-                return bytes;
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
             }
         }
 

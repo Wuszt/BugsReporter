@@ -31,7 +31,7 @@ namespace BugsReporterClient
             m_attachments.ResetScreenShot(remake);
         }
 
-        public void SendIssue(string stack, string userInfo, string title = null, string description = null )
+        public void SendIssue(string stack, string userInfo, string title = null, string description = null)
         {
             Issue issue = new Issue()
             {
@@ -56,13 +56,16 @@ namespace BugsReporterClient
                 issue = readingTask.Result;
             }
 
-            using (var client = new HttpClient())
+            if (m_attachments.IsAnythingToSend)
             {
-                client.BaseAddress = m_serverURI;
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = m_serverURI;
 
-                var postingTask = client.PostAsync("files/"+issue.ID, new ByteArrayContent(m_attachments.GetCompressedAttachments()));
+                    var postingTask = client.PostAsync("files/" + issue.ID, new ByteArrayContent(m_attachments.GetCompressedAttachments()));
 
-                postingTask.Wait();
+                    postingTask.Wait();
+                }
             }
         }
     }

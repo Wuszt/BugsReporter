@@ -9,6 +9,14 @@ namespace BugsReporterDevelopment
     {
         private const string c_serverAddress = "http://localhost:18982/api/";
 
+        public static string FilesPath
+        {
+            get
+            {
+                return c_serverAddress + "files/";
+            }
+        }
+
         public static List<IssueInfo> GetAllIssuesInfos()
         {
             var issues = GetAllIssues();

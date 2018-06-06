@@ -9,7 +9,7 @@
     <Grid>
         <DockPanel Margin="20,20,500,20">
             <Border Height="auto" Width="auto" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
-                <DataGrid x:Name="listView" ItemsSource="{Binding IssuesView}" SelectedItem="{Binding SelectedIssue, Mode=TwoWay}" AutoGenerateColumns="False" SelectionMode="Single">
+                <DataGrid x:Name="listView" ItemsSource="{Binding IssuesView}" SelectedItem="{Binding SelectedIssue, Mode=TwoWay}" AutoGenerateColumns="False" SelectionMode="Single" CanUserAddRows="False">
                     <DataGrid.Resources>
                         <Style TargetType="DataGridCell" x:Key="OneClickCheckBox">
                             <Style.Triggers>
@@ -92,6 +92,7 @@
                 </StackPanel>
                 <StackPanel>
                     <Label Style="{StaticResource Header}" Content="Attachments"/>
+                    <Button Content="Download" IsEnabled="{Binding SelectedIssue.IsAttachmentAvailable}" Click="Button_Click"/>
                     <Expander Header="Attachments" IsEnabled="{Binding SelectedIssue.IsAttachmentAvailable}">
                         <TextBlock Text="{Binding SelectedIssue.AttachmentsList}" TextWrapping="Wrap"/>
                     </Expander>

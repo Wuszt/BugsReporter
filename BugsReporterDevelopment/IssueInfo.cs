@@ -38,7 +38,7 @@ namespace BugsReporterDevelopment
         {
             get
             {
-                return Attachment != null;
+                return Attachment != null && Attachment.AttachmentsNames.Length > 0;
             }
         }
 
@@ -46,7 +46,7 @@ namespace BugsReporterDevelopment
         {
             get
             {
-                if (Attachment == null)
+                if (!IsAttachmentAvailable)
                     return "";
 
                 return Attachment.AttachmentsNames.Aggregate((x, y) => x + "\n" + y);
