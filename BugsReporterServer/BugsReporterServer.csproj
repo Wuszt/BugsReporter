@@ -144,6 +144,7 @@
     <Content Include="Models\Issues.edmx.diagram">
       <DependentUpon>Issues.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\BugsReporterServer.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

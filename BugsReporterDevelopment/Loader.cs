@@ -7,7 +7,7 @@ namespace BugsReporterDevelopment
 {
     internal static class Loader
     {
-        private const string c_serverAddress = "http://localhost:18982/api/";
+        private const string c_serverAddress = "http://wusztserver.ddns.net:776/api/";
 
         public static string FilesPath
         {

@@ -22,6 +22,12 @@ namespace BugsReporterServer.Controllers
             return db.Issues.ToList();
         }
 
+        [Route("api/status")]
+        public string GetHelloWorld()
+        {
+            return "I'm fine, thank You!";
+        }
+
         // GET: api/Issues/5
         [ResponseType(typeof(Issue))]
         public IHttpActionResult GetIssue(int id)
@@ -80,7 +86,14 @@ namespace BugsReporterServer.Controllers
             }
 
             db.Issues.Add(issue);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            {
+                int i =5;
+            }
 
             return Ok(issue);//CreatedAtRoute("DefaultApi", new { id = issue.ID }, issue);
         }

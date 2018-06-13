@@ -14,7 +14,7 @@ namespace BugsReporterServer.Controllers
 {
     public class FilesController : ApiController
     {
-        private const string c_filesDirectory = @"D:/BugsLogger";
+        private const string c_filesDirectory = @"G:/BugsLogger";
 
         private static SortedDictionary<int, FileInfo> m_cachedFilesInfos = new SortedDictionary<int, FileInfo>();
 
@@ -25,7 +25,7 @@ namespace BugsReporterServer.Controllers
             {
                 Issue[] issues = null;
 
-                client.BaseAddress = new Uri("http://localhost:18982/api/");
+                client.BaseAddress = new Uri("http://localhost:776/api/");
 
                 var gettingTask = client.GetAsync("issues");
 
