@@ -22,12 +22,6 @@ namespace BugsReporterServer.Controllers
             return db.Issues.ToList();
         }
 
-        [Route("api/status")]
-        public string GetHelloWorld()
-        {
-            return "I'm fine, thank You!";
-        }
-
         // GET: api/Issues/5
         [ResponseType(typeof(Issue))]
         public IHttpActionResult GetIssue(int id)
