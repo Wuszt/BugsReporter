@@ -9,6 +9,6 @@ Project contains 3 modules:
 
 As a developer you have 2 options to send an information about an issue:
 - implicitly - you provide all data which is sent to server. You can, for instance attach a callstack or screenshot (BugsReporter is able to capture a screenshot). User is not aware of that.
-- explicitly - you can provide data like files to attach, but user is able to exclude some or all of them.
+- explicitly - you can provide data like files to attach, but user is able to choose what will be eventually sent
 
 ![UI](Screenshots/ss.png)
